@@ -65,8 +65,6 @@ def pre_process():
 	return
 
 if __name__ == "__main__":
-	#pre_process <filename> <group Number> N
-
 
 	#### what i have so far:
 	#### 	- handles arguments and puts them in the correct variables
@@ -81,6 +79,31 @@ if __name__ == "__main__":
 		output_file = str(sys.argv[2])
 		print 'Input file :', input_file
 		print 'Output file :', output_file
+
+		# Open output file
+		f = open(output_file,'w')
+
+		# Read Line from File and separates tweet
+		for line in fileinput.input([input_file]):
+
+			# This puts each line into an array so we can modify it individually. 
+			line_arr = line.split(',',5)
+			print line_arr[-1]
+			html_pattern = re.compile(r'<.*?>')
+			if html_pattern.search(line_arr[-1]):
+				# Gets rid of HTML tags.
+				no_html = re.sub(html_pattern, "", line_arr[-1])
+				no_html = no_html.strip()
+				print 'True\n '
+				print no_html
+
+			else:
+				print 'False\n'
+
+		# Close output file
+		f.close()
+
+
 	elif len(sys.argv) == 4:
 		# has group ID
 		print 'Number of arguments:', len(sys.argv), 'arguments.'
@@ -90,33 +113,9 @@ if __name__ == "__main__":
 		print 'Input file :', input_file
 		print 'Output file :', output_file
 		print 'Group ID :', group_id
+
 	else:
 		# Incorrect amount of arguments
 		print "Incorrect amount of arguments"
-
-	i_count = 0
-	c_count = 0
-	index = 0
-
-	# Open output file
-	f = open(output_file,'w')
-
-	# Read Line from File and separates tweet
-	for line in fileinput.input([input_file]):
-		for char in line:
-			c_count += 1
-			if char == ",":
-				i_count += 1
-			if i_count == 4:
-				index = c_count
-		print line[index+1:]
-		f.write(line[index+1:])
-		c_count = 0
-		i_count = 0
-		index = 0
-
-	# Close output file
-	f.close()
-
 
 
