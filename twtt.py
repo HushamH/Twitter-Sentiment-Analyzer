@@ -13,8 +13,16 @@ specified in the guidelines.
 
 
 """ Remove any HTML tags and attributes. """
-def remove_html_tag_and_attr():
-	return
+def remove_html_tag_and_attr(line_arr):
+
+	html_pattern = re.compile(r'<.*?>')
+	if html_pattern.search(line_arr[-1]):
+		# Gets rid of HTML tags.
+		no_html = re.sub(html_pattern, "", line_arr[-1])
+		no_html = no_html.strip()
+		line_arr[-1] = no_html
+
+	return line_arr
 
 """ Replace any HTML character code with ASCII equivalent. """
 def replace_html_char_code():
@@ -88,17 +96,7 @@ if __name__ == "__main__":
 
 			# This puts each line into an array so we can modify it individually. 
 			line_arr = line.split(',',5)
-			print line_arr[-1]
-			html_pattern = re.compile(r'<.*?>')
-			if html_pattern.search(line_arr[-1]):
-				# Gets rid of HTML tags.
-				no_html = re.sub(html_pattern, "", line_arr[-1])
-				no_html = no_html.strip()
-				print 'True\n '
-				print no_html
-
-			else:
-				print 'False\n'
+			print remove_html_tag_and_attr(line_arr)[-1]
 
 		# Close output file
 		f.close()
