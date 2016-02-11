@@ -31,11 +31,17 @@ def replace_html_char_code():
 	return
 
 """ Remove URLs (tokens beginning with www/http). """
-def remove_urls():
-	return
+def remove_urls(line_arr):
 
-""" Remove the first char of twitter usernames '@' and hastags '#'. """
-def remove_at_and_hash():
+	url_pattern = re.compile(r"(www|http)[:/#.\w]+")
+	if url_pattern.search(line_arr[-1]):
+		# Gets rid of HTML tags.
+		no_url = re.sub(url_pattern, "", line_arr[-1])
+		no_url = no_url.strip()
+		line_arr[-1] = no_url
+
+	return line_arr
+
 	return
 
 """ Remove the first char of twitter usernames '@' and hastags '#'. """
@@ -43,7 +49,18 @@ def remove_at_and_hash():
 	return
 
 """ Place every sentence within a tweet on its own line. """
-def sentence_new_line():
+def sentence_new_line(line_arr):
+	# Use regex to match word before EOS punctuation and next 2 char. 
+	EOS = re.compile(r"(\w+)([\.\?!]+)\s*([A-Z])")
+
+	if EOS.search(line_arr[-1]):
+		print line_arr[-1]
+		line_arr[-1] = re.sub(EOS, r'\1 \2\n\3', line_arr[-1])
+		print line_arr[-1]
+
+	# If word before EOS in the hash of common abreviations, ignore
+
+	# If it still here replace with the s
 	return
 
 """ Keep Ellipsis and other multiple punctuations together. """
@@ -96,7 +113,11 @@ if __name__ == "__main__":
 
 			# This puts each line into an array so we can modify it individually. 
 			line_arr = line.split(',',5)
-			print remove_html_tag_and_attr(line_arr)[-1]
+			line_arr = remove_html_tag_and_attr(line_arr)
+			# print 'Removed HTML: ' + line_arr[-1]
+			line_arr = remove_urls(line_arr)
+			# print 'Removed URL: ' + line_arr[-1]
+			sentence_new_line(line_arr)
 
 		# Close output file
 		f.close()
