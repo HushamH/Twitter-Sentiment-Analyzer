@@ -11,6 +11,10 @@ Assignment guidelines and convert it to the normalized form which is also
 specified in the guidelines.
 """
 
+""" Removes the quotes that wrap the tweet portion of the CSV data """ 
+def remove_quotes(line_arr):
+	line_arr[-1] = line_arr[-1].replace("\"", "")
+	return line_arr
 
 """ Remove any HTML tags and attributes. """
 def remove_html_tag_and_attr(line_arr):
@@ -42,30 +46,21 @@ def remove_urls(line_arr):
 
 	return line_arr
 
-	return
-
 """ Remove the first char of twitter usernames '@' and hastags '#'. """
 def remove_at_and_hash():
 	return
 
 """ Place every sentence within a tweet on its own line. """
 def sentence_new_line(line_arr):
+	# THIS REGEX IS DEPENDENT ON SEP BY WHITESPACE BEING CALLED FIRST
 	# Use regex to match word before EOS punctuation and next 2 char. 
-	EOS = re.compile(r"(\w+)([\.\?!]+)\s*([A-Z])")
+	EOS = re.compile(r"(\w+)\s([\.\?!]+)\s([A-Z])")
 
 	if EOS.search(line_arr[-1]):
-		print line_arr[-1]
 		line_arr[-1] = re.sub(EOS, r'\1 \2\n\3', line_arr[-1])
-		print line_arr[-1]
 
-	# If word before EOS in the hash of common abreviations, ignore
-
-	# If it still here replace with the s
-	return
-
-""" Keep Ellipsis and other multiple punctuations together. """
-def ellip_and_mult():
-	return
+	# MAYBE TO-DO: If word before EOS in the hash of common abreviations, ignore
+	return line_arr
 
 # TO-DO: This may not be a function, this may be something we incorporate
 # 		 into our other functions
@@ -74,19 +69,51 @@ def ellip_and_mult():
 	return
 
 """ Make each token, including clitics, separated by whitespace. """
-def add_whitespace():
-	return
+def sep_by_whitespace(line_arr):
+	# This regex says, split the sentence on any group of 1 or more NON-ALPHANUMERIC CHARACTERS. 
+	delimit = re.compile(r"([\W]+)")
+	line_arr[-1] =  ' '.join(re.findall('[\S]+', ' '.join(re.split(delimit, line_arr[-1]))))
+	return line_arr
 
 """ Tag each token with its associated PoS. """
 def POS_tag():
 	return
 
 """ Add the appropriate demarcation before each tweet including tweet class. """
-def add_demarcation():
-	return
+def add_demarcation(line_arr):
+	demarc = '<A=' + str(line_arr[0]) + '>\n'
+	line_arr[-1] = demarc + line_arr[-1]
+	return line_arr
 
 """ Pre-process the tweets """
-def pre_process():
+def pre_process(input_file, output_file):
+	# Open output file
+	f = open(output_file,'w')
+
+	# Read Line from File and separates tweet
+	for line in fileinput.input([input_file]):
+
+		# THESE ARE ORDER SENSITIVE
+		# This puts each line into an array so we can modify it individually. 
+		line_arr = line.split(',',5)
+		remove_quotes(line_arr)
+		line_arr = remove_html_tag_and_attr(line_arr)
+		# print 'Removed HTML: ' + line_arr[-1]
+		line_arr = remove_urls(line_arr)
+		# print 'Removed URL: ' + line_arr[-1]
+		line_arr = sep_by_whitespace(line_arr)
+		# print 'Separated by white spaces: ' + line_arr[-1]
+		line_arr = sentence_new_line(line_arr)
+		# print 'Sentences on new lines: ' + line_arr[-1]
+		line_arr = add_demarcation(line_arr)
+		
+		print line_arr[-1]
+
+	# Close output file
+	f.close()
+
+""" Pre-process the tweets given a group ID. """
+def pre_process_with_GID(input_file, output_file, group_id):
 	return
 
 if __name__ == "__main__":
@@ -105,23 +132,7 @@ if __name__ == "__main__":
 		print 'Input file :', input_file
 		print 'Output file :', output_file
 
-		# Open output file
-		f = open(output_file,'w')
-
-		# Read Line from File and separates tweet
-		for line in fileinput.input([input_file]):
-
-			# This puts each line into an array so we can modify it individually. 
-			line_arr = line.split(',',5)
-			line_arr = remove_html_tag_and_attr(line_arr)
-			# print 'Removed HTML: ' + line_arr[-1]
-			line_arr = remove_urls(line_arr)
-			# print 'Removed URL: ' + line_arr[-1]
-			sentence_new_line(line_arr)
-
-		# Close output file
-		f.close()
-
+		pre_process(input_file, output_file)
 
 	elif len(sys.argv) == 4:
 		# has group ID
@@ -133,6 +144,8 @@ if __name__ == "__main__":
 		print 'Output file :', output_file
 		print 'Group ID :', group_id
 
+		pre_process_with_GID(input_file, output_file, group_id)
+		
 	else:
 		# Incorrect amount of arguments
 		print "Incorrect amount of arguments"
