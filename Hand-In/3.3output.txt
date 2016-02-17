@@ -1,0 +1,109 @@
+3.3Output.txt
+
+The top three attributes from both the 500 and 5500 sample size were:
+
+Top Attributes for sample of 500:
+
+1. number of second person pronouns
+2. average length of token
+3. number of past tense verbs
+
+Top Attributes for sample of 5500:
+
+1. average length of token
+2. number of second person pronouns
+3. number of past tense verbs
+
+A possible reason for those being the top regardless of the sample size
+is because of the content people tweet. Twitter was created to share with
+fellow friends their moment in life. It is reasonable to have past tense
+verbs as one of the top because people share moments that has happened to
+them. The second person pronoun being the subject of their tweets. With 
+the limited 140 characters on Twitter, the average length of token could
+be why it is one of the top attributes.
+
+Here we provide some likely reasons for the presence of each attribute in both sample sizes:
+
+# Second Person Pronouns: 
+Second person pronouns might be relevant to gaining information about the information because they are present in tweets such as recommendations i.e “you need to try this!”. 
+
+# Past Tense Verbs:
+Past tense verbs may have an important role as they express actions that a person has taken. So if we can match these actions with similar actions and compare other elements of the tweet, we can make a determination on whether the sentiment is overall positive or negative.
+
+# Average length of token:
+Perhaps there is a correlation between the words people choose to use and the sentiment intended. For example, people may use longer tokens when expressing discontent, as to elaborate on why they are discontent.
+
+#########################################################################
+################################## 500 ##################################
+#########################################################################
+
+
+=== Attribute Selection on all input data ===
+
+Search Method:
+	Attribute ranking.
+
+Attribute Evaluator (supervised, Class (nominal): 21 tweet_class):
+	Information Gain Ranking Filter
+
+Ranked attributes:
+ 0.04153    2 num_second_person_pronouns
+ 0.03406   19 avg_length_token
+ 0.02237    5 num_past_tense_verbs
+ 0.01795    1 num_first_person_pronouns
+ 0.01471   16 num_modern_slang
+ 0.00712    7 num_commas
+ 0.00708    9 num_dashes
+ 0          8 num_colons_semi_colons
+ 0          3 num_third_person_pronouns
+ 0          6 num_future_tense_verbs
+ 0          4 num_coordinating_conjunction
+ 0         17 num_all_caps
+ 0         15 num_wh_words
+ 0         20 num_sentences
+ 0         18 avg_sentence_length
+ 0         11 num_ellipses
+ 0         10 num_parentheses
+ 0         14 num_adverbs
+ 0         12 num_common_nouns
+ 0         13 num_proper_nouns
+
+Selected attributes: 2,19,5,1,16,7,9,8,3,6,4,17,15,20,18,11,10,14,12,13 : 20
+
+
+#########################################################################
+################################# 5500 ##################################
+#########################################################################
+
+=== Attribute Selection on all input data ===
+
+Search Method:
+	Attribute ranking.
+
+Attribute Evaluator (supervised, Class (nominal): 21 tweet_class):
+	Information Gain Ranking Filter
+
+Ranked attributes:
+ 0.02966   19 avg_length_token
+ 0.02371    2 num_second_person_pronouns
+ 0.02325    5 num_past_tense_verbs
+ 0.01976    1 num_first_person_pronouns
+ 0.00622   17 num_all_caps
+ 0.00618   16 num_modern_slang
+ 0.00518   14 num_adverbs
+ 0.0048    12 num_common_nouns
+ 0.00307    7 num_commas
+ 0.00295    9 num_dashes
+ 0.00195   13 num_proper_nouns
+ 0.00104   10 num_parentheses
+ 0.00104    8 num_colons_semi_colons
+ 0          3 num_third_person_pronouns
+ 0         20 num_sentences
+ 0         18 avg_sentence_length
+ 0          6 num_future_tense_verbs
+ 0         11 num_ellipses
+ 0          4 num_coordinating_conjunction
+ 0         15 num_wh_words
+
+Selected attributes: 19,2,5,1,17,16,14,12,7,9,13,10,8,3,20,18,6,11,4,15 : 20
+

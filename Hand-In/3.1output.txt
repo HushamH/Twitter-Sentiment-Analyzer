@@ -1,0 +1,78 @@
+
+SMO
+
+Kernel used:
+  Linear Kernel: K(x,y) = <x,y>
+
+Classifier for classes: 0, 4
+
+BinarySMO
+
+Machine linear: showing attribute weights, not support vectors.
+
+        -2.6746 * (normalized) num_first_person_pronouns
+ +       3.0631 * (normalized) num_second_person_pronouns
+ +       0.577  * (normalized) num_third_person_pronouns
+ +       0.4115 * (normalized) num_coordinating_conjunction
+ +      -3.2236 * (normalized) num_past_tense_verbs
+ +       0.6318 * (normalized) num_future_tense_verbs
+ +       2.1498 * (normalized) num_commas
+ +       1.4282 * (normalized) num_colons_semi_colons
+ +       3.7623 * (normalized) num_dashes
+ +       1.0529 * (normalized) num_parentheses
+ +      -0.7394 * (normalized) num_ellipses
+ +       1.7936 * (normalized) num_common_nouns
+ +       1.0753 * (normalized) num_proper_nouns
+ +      -1.5442 * (normalized) num_adverbs
+ +      -0.4512 * (normalized) num_wh_words
+ +       0.5016 * (normalized) num_modern_slang
+ +       0.529  * (normalized) num_all_caps
+ +       0.955  * (normalized) avg_sentence_length
+ +       9.6201 * (normalized) avg_length_token
+ +       1.7405 * (normalized) num_sentences
+ -       1.4753
+
+Number of kernel evaluations: 4509269 (60.427% cached)
+
+
+
+Time taken to build model: 2.42 seconds
+Time taken to test model on training data: 0.15 seconds
+
+=== Error on training data ===
+
+Correctly Classified Instances        7244               65.8545 %
+Incorrectly Classified Instances      3756               34.1455 %
+Kappa statistic                          0.3171
+Mean absolute error                      0.3415
+Root mean squared error                  0.5843
+Relative absolute error                 68.2909 %
+Root relative squared error            116.8682 %
+Total Number of Instances            11000     
+
+
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+ 3793 1707 |    a = 0
+ 2049 3451 |    b = 4
+
+
+=== Error on test data ===
+
+Correctly Classified Instances         189               52.6462 %
+Incorrectly Classified Instances       170               47.3538 %
+Kappa statistic                          0.051 
+Mean absolute error                      0.4735
+Root mean squared error                  0.6881
+Relative absolute error                 94.7075 %
+Root relative squared error            137.6281 %
+Total Number of Instances              359     
+
+
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+  80  97 |   a = 0
+  73 109 |   b = 4
+
